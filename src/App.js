@@ -8,8 +8,8 @@ import { v4 as uuidv4 } from "uuid";
 
 class App extends Component {
   state = {
-    comments: [    ],
-    isAdmin: false
+    comments: [],
+    isAdmin: false,
   };
 
   addComment = (name, message) => {
@@ -29,25 +29,31 @@ class App extends Component {
     });
   };
 
-  changeMode = () => { 
-    this.setState({ 
-        isAdmin: !this.state.isAdmin
-    })
- }
+  changeMode = () => {
+    this.setState({
+      isAdmin: !this.state.isAdmin,
+    });
+  };
 
   render() {
-    let button = this.state.isAdmin ? 
-    <button className="button is-danger" onClick={this.changeMode}>Désactiver le mode d'administration</button>
-    : <button className="button is-info" onClick={this.changeMode}>Activer le mode d'administration</button>;
+    let button = this.state.isAdmin ? (
+      <button className="button is-danger" onClick={this.changeMode}>
+        Désactiver le mode d'administration
+      </button>
+    ) : (
+      <button className="button is-info" onClick={this.changeMode}>
+        Activer le mode d'administration
+      </button>
+    );
 
-    let classMessage = this.state.isAdmin ? "message is-danger" : "message is-info";
-   
+    let classMessage = this.state.isAdmin
+      ? "message is-danger"
+      : "message is-info";
+
     return (
       <div className="App container">
         <article className={classMessage}>
-            <div className="message-body">
-                {button}
-            </div>
+          <div className="message-body">{button}</div>
         </article>
 
         <div className="columns">
