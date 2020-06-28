@@ -1,44 +1,71 @@
-import React, { Component } from 'react';
-import './App.scss';
+import React, { Component } from "react";
+import "./App.scss";
 import CommentList from "./CommentList";
 
-import AdminMode from "./AdminMode";
 import CommentForm from "./CommentForm";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 class App extends Component {
-  state = { 
-    comments: [  
-      { id: 1,name: "JB", message: "Youhou la famille!"},
-      { id: 2, name: "Kirikou", message: "Je ne suis pas grand mais je suis vaillant"}
-    ]
-   }
+  state = {
+    comments: [    ],
+    isAdmin: false
+  };
 
   addComment = (name, message) => {
     let newComment = {
       id: uuidv4(),
       name: name,
-      message: message
-    }
+      message: message,
+    };
     this.setState({
-      comments: [...this.state.comments,newComment]
+      comments: [...this.state.comments, newComment],
+    });
+  };
+
+  handleDelete = (id) => {
+    this.setState({
+      comments: [...this.state.comments].filter((comment) => comment.id !== id),
+    });
+  };
+
+  changeMode = () => { 
+    this.setState({ 
+        isAdmin: !this.state.isAdmin
     })
-  }
+ }
 
-  render() { 
+  render() {
+    let button = this.state.isAdmin ? 
+    <button className="button is-danger" onClick={this.changeMode}>Désactiver le mode d'administration</button>
+    : <button className="button is-info" onClick={this.changeMode}>Activer le mode d'administration</button>;
 
-    return ( 
+    let classMessage = this.state.isAdmin ? "message is-danger" : "message is-info";
+   
+    return (
       <div className="App container">
+        <article className={classMessage}>
+            <div className="message-body">
+                {button}
+            </div>
+        </article>
 
-        <AdminMode />
+        <div className="columns">
+          <div className="column">
+            <CommentForm addComment={this.addComment} />
+          </div>
 
-        <CommentForm addComment={this.addComment} />
-
-        <CommentList comments={this.state.comments} />
+          <div className="column">
+            <CommentList
+              comments={this.state.comments}
+              handleDelete={this.handleDelete}
+              isadmin={this.state.isAdmin}
+            />
+          </div>
+        </div>
       </div>
-     );
+    );
   }
 }
- 
+
 export default App;

@@ -27,24 +27,27 @@ class CommentForm extends Component {
 
     render() { 
         return (
-            <div className="CommentForm">
+            <div className="Commentform ">
 
-                <h2 className="title is-2">Ajouter un commentaire</h2>
+                <h2 className="title is-h2">Ajouter un commentaire</h2>
                 <form onSubmit={this.handleSubmit} >
 
-                <input type="text" placeholder="Your name"
+                <label className="label">Name</label>
+                <input className="input" type="text" placeholder="Text input"
                 onChange={this.handleChangeName} 
                 value={this.state.name} />
 
-                <textarea placeholder="Your comment"
+                <label className="label">Message</label>
+                <textarea className="textarea" placeholder="Textarea"
                 onChange={this.handleChangeMessage}
                 value={this.state.message}
                 cols="30" rows="10"></textarea>
 
-                <button className="button is-primary">Comment</button>
+                <button className="button is-primary">Envoyer</button>
                 </form>
             </div>
           );
+          
     }
 }
  
